@@ -176,17 +176,17 @@ function drawPlot() {
         copyPhi1 = [...phi1]
         phi1.splice(0, 1)
         copyPhi1.splice(-1, 1)
-        derivativePhi1 = math.multiply(math.subtract(copyPhi1, phi1), 1/(timeStep*2*Math.PI))
+        derivativePhi1 = math.multiply(math.subtract(phi1, copyPhi1), 1/(timeStep*2*Math.PI))
 
         copyPhi2 = [...phi2]
         phi2.splice(0, 1)
         copyPhi2.splice(-1, 1)
-        derivativePhi2 = math.multiply(math.subtract(copyPhi2, phi2), 1/(timeStep*2*Math.PI))
+        derivativePhi2 = math.multiply(math.subtract(phi2, copyPhi2), 1/(timeStep*2*Math.PI))
 
         copyPhi3 = [...phi3]
         phi3.splice(0, 1)
         copyPhi3.splice(-1, 1)
-        derivativePhi3 = math.multiply(math.subtract(copyPhi3, phi3), 1/(timeStep*2*Math.PI))
+        derivativePhi3 = math.multiply(math.subtract(phi3, copyPhi3), 1/(timeStep*2*Math.PI))
 
         times.splice(0, 1)
 
@@ -238,20 +238,6 @@ function drawPlot() {
               t: 10,
             },
             height: 300,
-            shapes: [
-                {
-                    type: 'rect',
-                    x0: entrainmentStart,
-                    x1: Math.min(timeLength,entrainmentEnd),
-                    y0: -1,
-                    y1: 1,
-                    fillcolor: '#d3d3d3',
-                    opacity: 0.2,
-                    line: {
-                        width: 0
-                    }
-                }
-            ]
           };
           
         var config = {responsive: true}
