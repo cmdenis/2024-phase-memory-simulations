@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="img/icon.png" />
+    <script
+      type="text/javascript"
+      async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.3.2/math.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.10.0-rc.1/dist/katex.min.css"
+      integrity="sha384-D+9gmBxUQogRLqvARvNLmA9hS2x//eK1FhVb9PiU86gmcrBrJAQT8okdJ4LMp2uv"
+      crossorigin="anonymous" />
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/katex@0.10.0-rc.1/dist/katex.min.js"
+      integrity="sha384-483A6DwYfKeDa0Q52fJmxFXkcPCFfnXMoXblOkJ4JcA8zATN6Tm78UNL72AKk+0O"
+      crossorigin="anonymous"></script>
+
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.10.0-rc.1/dist/contrib/auto-render.min.js"
+      integrity="sha384-yACMu8JWxKzSp/C1YV86pzGiQ/l1YUfE8oPuahJQxzehAjEt2GiQuy/BIvl9KyeF"
+      crossorigin="anonymous"
+      onload="renderMathInElement(document.body);"></script>
+    <title>Two oscillators phase memory</title>
+  </head>
+  <body>
+    <section>
+      <!-- Explanation paragraph -->
+      <h1>2-oscillator entrainment</h1>
+
+      <h2>Introduction</h2>
+      <p>
+        Here are some interactive simulations of two coupled phase oscillators.
+        One of which is entrained, the other is not directly entrained. This is
+        illustrated by the following figure.
+      </p>
+
+      <div style="text-emphasis: center">
+        <img
+          style="
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 30%;
+          "
+          src="img/network_fig.svg"
+          alt="network figure" />
+      </div>
+
+      <p>
+        Mathematically, we model this using the following system of differential
+        equations: $$\begin{cases} \dot{\phi}_1 = \omega_1 + k_1 \sin(\phi_2
+        -\phi_1) + k_3 \sin(\phi_3 - \phi_1) \\ \dot{\phi}_2 = \omega_2 + k_2
+        \sin(\phi_1 - \phi_2)\\ \dot{\phi}_3 = \omega_3 \end{cases}$$
+      </p>
+    </section>
+
+    <section>
+      <h2>Parameters</h2>
+      <p>
+        You can tweak the parameters of the simulations here. The \(k\)
+        parameters control the interactions between the oscillators. The \(k\)
+        controls the frequencies of the oscillators. The "start time" and "stop
+        time" control the moment at which the coupling from \(\phi_3\) to
+        \(\phi_1\) is put on and removed.
+      </p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr">
+        <div
+          style="
+            display: grid;
+            grid-template-rows: 1fr 1fr 1fr 1fr;
+            padding: 20px;
+          ">
+          <!-- Sliders for omega -->
+          <div><b>Oscillator frequencies:</b></div>
+
+          <div>
+            <input
+              type="range"
+              min="0.01"
+              value="1.0"
+              max="3"
+              class="slider"
+              oninput="this.nextElementSibling.value = 'ω₁ = ' +this.value; omega1 = Number(this.value)*2*Math.PI; drawPlot()"
+              step="0.01" />
+            <output>ω₁ = 1.0</output>
+          </div>
+          <div>
+            <input
+              type="range"
+              min="0.01"
+              value="1.0"
+              max="3"
+              class="slider"
+              oninput="this.nextElementSibling.value = 'ω₂ = ' +this.value; omega2 = Number(this.value)*2*Math.PI; drawPlot()"
+              step="0.01" />
+            <output>ω₂ = 1.0</output>
+          </div>
+          <div>
+            <input
+              type="range"
+              min="0.01"
+              value="1.0"
+              max="3"
+              class="slider"
+              oninput="this.nextElementSibling.value = 'ω₃ = ' +this.value; omega3 = Number(this.value)*2*Math.PI; drawPlot()"
+              step="0.01" />
+            <output>ω₃ = 1.0</output>
+          </div>
+        </div>
+
+        <div
+          style="
+            display: grid;
+            grid-template-rows: 1fr 1fr 1fr 1fr;
+            padding: 20px;
+          ">
+          <!-- Sliders for k -->
+          <div><b>Coupling strenghts:</b></div>
+
+          <div>
+            <input
+              type="range"
+              min="0.0"
+              value="1.0"
+              max="5"
+              class="slider"
+              oninput="this.nextElementSibling.value = 'k₁ = ' +this.value; k1 = Number(this.value); drawPlot()"
+              step="0.01" />
+            <output>k₁ = 1.0</output>
+          </div>
+          <div>
+            <input
+              type="range"
+              min="0.0"
+              value="1.0"
+              max="5"
+              class="slider"
+              oninput="this.nextElementSibling.value = 'k₂ = ' +this.value; k2 = Number(this.value); drawPlot()"
+              step="0.01" />
+            <output>k₂ = 1.0</output>
+          </div>
+          <div>
+            <input
+              type="range"
+              min="0.0"
+              value="1.0"
+              max="5"
+              class="slider"
+              oninput="this.nextElementSibling.value = 'k₃ = ' +this.value; k3 = Number(this.value); drawPlot()"
+              step="0.01" />
+            <output>k₃ = 1.0</output>
+          </div>
+        </div>
+
+        <div
+          style="
+            display: grid;
+            grid-template-rows: 1fr 1fr 1fr 1fr;
+            padding: 20px;
+          ">
+          <!-- Sliders for entrainment timing -->
+          <div><b>Entrainment timing:</b></div>
+
+          <div>
+            <input
+              type="range"
+              min="0.0"
+              value="0.0"
+              max="20"
+              class="slider"
+              oninput="this.nextElementSibling.value = 'start time = ' + this.value; entrainmentStart = Number(this.value); drawPlot()"
+              step="0.5" />
+            <output>start time = 0.0</output>
+          </div>
+          <div>
+            <input
+              type="range"
+              min="0.0"
+              value="10"
+              max="20"
+              class="slider"
+              oninput="this.nextElementSibling.value = 'end time = ' + this.value; entrainmentEnd = Number(this.value); drawPlot()"
+              step="0.5" />
+            <output>end time = 10</output>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div id="phasePlot"></div>
+    </section>
+
+    <section>
+      <div id="phaseDerivativePlot"></div>
+    </section>
+
+    <section>
+      <input
+        type="range"
+        class="slider"
+        style="
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          width: 100%;
+        "
+        value="10"
+        min="0"
+        max="50"
+        step="0.05"
+        oninput="timeLength = Number(this.value); numberOfTimeStep = Math.ceil(timeLength/timeStep); drawPlot()" />
+    </section>
+
+    <script src="app.js"></script>
+
+    <footer><div style="height: 100px"></div></footer>
+  </body>
+</html>
