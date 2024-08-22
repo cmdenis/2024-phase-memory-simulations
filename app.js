@@ -80,15 +80,15 @@ function integrator(phi_0, numberOfTimeStep) {
 var timeStep = 0.02
 var omega1 = 2.0*Math.PI
 var omega2 = 2.0*Math.PI
-var omega3 = 2.0*Math.PI
-var k1 = 1.0
-var k2 = 1.0
-var k3 = 1.0
+var omega3 = 2.0*Math.PI*1.28
+var k1 = 1.5
+var k2 = 1.75
+var k3 = 3.6
 var phiInit = [0.0, 0.0, 0.0]
-var timeLength = 10.0
+var timeLength = 13
 var numberOfTimeStep = Math.ceil(timeLength/timeStep)
-var entrainmentStart = 0.0
-var entrainmentEnd = timeLength
+var entrainmentStart = 1.0
+var entrainmentEnd = 10
 
 
 
